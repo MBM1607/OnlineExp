@@ -516,7 +516,7 @@ def allotmentLogic2(request):
                 print(f"{currentParticipant.upiID} is the first participant")
                 treatement = selectTreatement(tracker)
                 print(f"{currentParticipant.upiID}'s treatement is :{treatement}")
-                if treatement == "T2":
+                if treatement in ("T2", "C0"):
                     politicalLeaning = (
                         "left" if currentParticipant.democaticOpinions < 50 else "right"
                     )
@@ -754,9 +754,10 @@ def newsResponse(request):
                 print(tracker)
 
                 if treatement == "C0":
-                    print("reducing C0 tracker by 1")
-                    tracker.noPreferenceSpots = F("noPreferenceSpots") - 1
-
+                    if currentParticipant.democaticOpinions < 50:
+                        tracker.leftSpots = F("leftSpots") - 1
+                    elif currentParticipant.democaticOpinions > 50:
+                        tracker.rightSpots = F("rightSpots") - 1
                 elif treatement == "T1_L":
                     print("reducing T1_L tracker by 1")
                     tracker.leftSpots = F("leftSpots") - 1

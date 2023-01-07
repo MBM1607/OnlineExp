@@ -190,10 +190,12 @@ class AllotmentLogs(models.Model):
 
 
 class C0(models.Model):
-    # all types allowes
     nodeID = models.CharField(max_length=50, null=True, default=None, unique=True)
     participant = models.OneToOneField(
         Participant, on_delete=models.SET_DEFAULT, null=True, default=None, blank=True
+    )
+    participantTypeRequired = models.CharField(
+        max_length=50, blank=True, default="left"
     )
     responseToNews = models.IntegerField(null=True, default=None)
     responseToNewsTimestamp = models.DateTimeField(blank=False, default=None, null=True)
